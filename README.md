@@ -9,7 +9,7 @@ We'll also be using [coffeescript](http://coffeescript.org/) today to make our c
 Lastly, we'll be using CodePen as our preferred in-browser code editor today. Because this project will utilize coffeescript, sketch.js, and jquery, CodePen will make it easier to configure during our relatively short lesson. If you want some extra credit when we're done, try getting everything to run locally!
 
 
-## Bubbles
+## Preparing your environment
 
 Today, we'll be drawing on a canvas and then creating some cool hover effects whenever your mouse touches different elements on the page. There will be a lot of room for experimentation so feel free to create some cool effects of your own!
 
@@ -37,6 +37,28 @@ Select *Latest Version Of* **jQuery**
 
 Link to the following external URL: https://raw.github.com/soulwire/sketch.js/master/js/sketch.min.js
 
-### Basic CSS Settings
+## Creating a sketchpad
+
+The first thing we want to do is create a place for our drawing.
+
+In the CSS block we have to style our canvas and we'll give it a pretty background color.
+
+```css
+
+canvas {
+  background: #023;
+  display: block; 
+}
+
+``` 
+
+```coffeescript
+sketch = Sketch.create()
+```
+
+
+
+
+
 
 
