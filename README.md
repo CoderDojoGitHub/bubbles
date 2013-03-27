@@ -2,7 +2,7 @@
 
 ## Technologies
 
-*sketch.js* is a tiny (~5k) boilerplate for creating JavaScript based creative coding experiments.
+**sketch.js** is a tiny (~5k) boilerplate for creating JavaScript based creative coding experiments.
 
 We'll also be using [coffeescript](http://coffeescript.org/) today to make our code easier to write (less lines!)
 
@@ -33,7 +33,7 @@ Select "Prefix free" so you don't have to worry about vendor prefixes. This does
 
 Select "Coffeescript"
 
-Select **Latest Version Of** *jQuery*
+Select *Latest Version Of* **jQuery**
 
 Link to the following external URL: https://raw.github.com/soulwire/sketch.js/master/js/sketch.min.js
 
