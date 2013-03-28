@@ -43,18 +43,81 @@ The first thing we want to do is create a place for our drawing.
 
 In the CSS block we have to style our canvas and we'll give it a pretty background color.
 
+CSS
 ```css
-
 canvas {
   background: #023;
   display: block; 
 }
-
 ``` 
 
+JS
 ```coffeescript
+# General Variables
 sketch = Sketch.create()
 ```
+
+At this point, you should see a colored background on the bottom half of your codepen screen.
+
+### Creating Particles
+
+Next, we're going to create a bunch of particles on the screen and have them move about randomly.
+
+```coffeescript
+# General Variables
+sketch = Sketch.create()
+particles = []
+particleCount = 750
+sketch.strokeStyle = 'hsla(200, 50%, 50%, .4)'
+
+# Particles
+Particle = ->
+  this.x = random( sketch.width ) 
+  this.y = random( sketch.height, sketch.height * 2 )
+  this.vx = 0
+  this.vy = -random( 1, 10 ) / 5
+  this.radius = this.baseRadius = 1
+  this.maxRadius = 50  
+  this.threshold = 150 
+
+# Particle Prototype
+Particle.prototype =
+  update: ->
+    # Adjust Velocity
+    this.vx += ( random( 100 ) - 50 ) / 1000
+    this.vy -= random( 1, 20 ) / 10000
+      
+    # Apply Velocity
+    this.x += this.vx
+    this.y += this.vy
+    
+  render: ->
+    sketch.beginPath()
+    sketch.arc( this.x, this.y, this.radius, 0, TWO_PI )
+    sketch.closePath()
+    sketch.fill()
+    sketch.stroke()
+
+# Create Particles
+z = particleCount
+while z--
+  particles.push( new Particle() )
+  
+# Sketch Clear
+sketch.clear = ->
+  sketch.clearRect( 0, 0, sketch.width, sketch.height )
+  
+# Sketch Update
+sketch.update = ->
+  i = particles.length
+  particles[ i ].update() while i--
+
+# Sketch Draw
+sketch.draw = ->  
+  i = particles.length
+  particles[ i ].render() while i--
+```
+
 
 
 
