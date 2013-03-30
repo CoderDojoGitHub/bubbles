@@ -47,7 +47,7 @@ The first thing we want to do is create a place for our drawing.
 
 In the CSS block we have to style our canvas and we'll give it a pretty background color.
 
-CSS
+**CSS**
 ```css
 canvas {
   background: #023;
@@ -55,7 +55,7 @@ canvas {
 }
 ``` 
 
-JS
+**JS**
 ```coffeescript
 # General Variables
 sketch = Sketch.create()
@@ -67,24 +67,30 @@ At this point, you should see a colored background on the bottom half of your co
 
 Next, we're going to create a bunch of particles on the screen and have them move about randomly.
 
-JS
+**JS**
+
 ```coffeescript
 # General Variables
 sketch = Sketch.create()
 particles = []
 particleCount = 750
 sketch.strokeStyle = 'hsla(200, 50%, 50%, .4)'
+```
 
+```coffeescript
 # Particles
 Particle = ->
   this.x = random( sketch.width ) 
   this.y = random( sketch.height, sketch.height * 2 )
   this.vx = 0
   this.vy = -random( 1, 10 ) / 5
-  this.radius = this.baseRadius = 1
+  this.radius = 1
+  this.baseRadius = 1
   this.maxRadius = 50  
   this.threshold = 150 
+```
 
+```coffeescript
 # Particle Prototype
 Particle.prototype =
   update: ->
@@ -102,7 +108,9 @@ Particle.prototype =
     sketch.closePath()
     sketch.fill()
     sketch.stroke()
+```
 
+```coffeescript
 # Create Particles
 z = particleCount
 while z--
