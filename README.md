@@ -17,25 +17,29 @@ Today, we'll be drawing on a canvas and then creating some cool hover effects wh
 
 Visit [codepen.io](http://codepen.io/) and click the "New Pen" button.
 
+![](http://i.imgur.com/0zk5K1C.png)
+
 ### Setting up the environment
 
 In the top right corner of each section, there is a gear button that will allow you to access the settings for that piece of code. We're going to make a few modifications to make sure our environment is ready for the code we are about to write.
 
+
 #### CSS Settings
 
-Select "None" as the type of CSS.
+- Select "None" as the type of CSS.
+- Select "Reset" to reset style and elminiate browser inconsistancies.
+- Select "Prefix free" so you don't have to worry about vendor prefixes.
+  - This doesn't matter too much for what we are doing but if you start experimenting towards the end, it may help.
 
-Select "Reset" to reset style and elminiate browser inconsistancies.
-
-Select "Prefix free" so you don't have to worry about vendor prefixes. This doesn't matter too much for what we are doing but if you start experimenting towards the end, it may help.
+![](http://i.imgur.com/u065kVg.png)
 
 #### JavaScript Settings
 
-Select "Coffeescript"
+- Select "Coffeescript"
+- Select *Latest Version Of* **jQuery**
+- Link to the following external URL: https://raw.github.com/soulwire/sketch.js/master/js/sketch.min.js
 
-Select *Latest Version Of* **jQuery**
-
-Link to the following external URL: https://raw.github.com/soulwire/sketch.js/master/js/sketch.min.js
+![](http://i.imgur.com/HGXwgrQ.png)
 
 ## Creating a sketchpad
 
@@ -43,7 +47,7 @@ The first thing we want to do is create a place for our drawing.
 
 In the CSS block we have to style our canvas and we'll give it a pretty background color.
 
-CSS
+**CSS**
 ```css
 canvas {
   background: #023;
@@ -51,7 +55,7 @@ canvas {
 }
 ``` 
 
-JS
+**JS**
 ```coffeescript
 # General Variables
 sketch = Sketch.create()
@@ -63,24 +67,30 @@ At this point, you should see a colored background on the bottom half of your co
 
 Next, we're going to create a bunch of particles on the screen and have them move about randomly.
 
-JS
+**JS**
+
 ```coffeescript
 # General Variables
 sketch = Sketch.create()
 particles = []
 particleCount = 750
 sketch.strokeStyle = 'hsla(200, 50%, 50%, .4)'
+```
 
+```coffeescript
 # Particles
 Particle = ->
   this.x = random( sketch.width ) 
   this.y = random( sketch.height, sketch.height * 2 )
   this.vx = 0
   this.vy = -random( 1, 10 ) / 5
-  this.radius = this.baseRadius = 1
+  this.radius = 1
+  this.baseRadius = 1
   this.maxRadius = 50  
   this.threshold = 150 
+```
 
+```coffeescript
 # Particle Prototype
 Particle.prototype =
   update: ->
@@ -98,7 +108,9 @@ Particle.prototype =
     sketch.closePath()
     sketch.fill()
     sketch.stroke()
+```
 
+```coffeescript
 # Create Particles
 z = particleCount
 while z--
