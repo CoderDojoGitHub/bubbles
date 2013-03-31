@@ -247,7 +247,7 @@ our canvas area and put them back on the screen.
 - Add the new code (5 lines) that checks bounds
 
 
-JS
+**JS**
 ```coffeescript
 # Particle Prototype
 Particle.prototype =
@@ -260,6 +260,7 @@ Particle.prototype =
     this.x += this.vx
     this.y += this.vy
 
+
     # **New code**
     # Check Bounds   
     if this.x < - this.maxRadius || this.x > sketch.width + this.maxRadius || this.y < - this.maxRadius
@@ -267,6 +268,7 @@ Particle.prototype =
       this.y = random( sketch.height + this.maxRadius, sketch.height * 2 )
       this.vx = 0
       this.vy = -random( 1, 10 ) / 5
+
 
 
   render: ->
@@ -278,14 +280,47 @@ Particle.prototype =
 ```
 
 
+## Fancy customizations!
+
+### Increase particles
+
+```coffeescript
+particleCount = 1234
+```
+
+### Increase the radius
+
+```coffeescript
+this.radius = 10
+this.baseRadius = 10
+```
+
+![](http://i.imgur.com/umJGIY4.png)
+
+### Randomize particle color
+
+```coffeescript
+Particle = ->
+  this.x = random( sketch.width ) 
+  this.y = random( sketch.height, sketch.height * 2 )
+  this.vx = 0
+  sketch.fillStyle = 'hsla('+random(200)+', 50%, 50%, .4)' # new line
+  this.vy = -random( 1, 10 ) / 5
+  this.radius = 10
+  this.baseRadius = 10
+  this.maxRadius = 50  
+  this.threshold = 150
+```
+
+![](http://i.imgur.com/SvvtWSh.png)
+
 ## Bonus Round!
 
 Here are some extra challenges you can try.
 
-1. Randomize the color of the particles.
-2. Have your particles react to mouse movement (what if the mouse repels the nearest particles?).
-3. Remove particles by clicking. 
-4. Experiment!
+1. Have your particles react to mouse movement (what if the mouse repels the nearest particles?).
+2. Remove particles by clicking. 
+3. Experiment!
 
 In case you need some help....
 
