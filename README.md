@@ -235,7 +235,16 @@ sketch.draw = ->
   particles[ i ].render() while i--
 ```
 
+![](http://i.imgur.com/v2YfLb9.png)
 
+
+## Recycling particles
+
+You may notice that the particles disappear from the screen after a few seconds, so now we will detect if they are outside
+our canvas area and put them back on the screen.
+
+- Scroll up to the Particle update function
+- Add the new code (5 lines) that checks bounds
 
 
 JS
@@ -251,51 +260,21 @@ Particle.prototype =
     this.x += this.vx
     this.y += this.vy
 
+    # **New code**
     # Check Bounds   
     if this.x < - this.maxRadius || this.x > sketch.width + this.maxRadius || this.y < - this.maxRadius
       this.x = random( sketch.width )      
       this.y = random( sketch.height + this.maxRadius, sketch.height * 2 )
       this.vx = 0
       this.vy = -random( 1, 10 ) / 5
-    
+
+
   render: ->
     sketch.beginPath()
     sketch.arc( this.x, this.y, this.radius, 0, TWO_PI )
     sketch.closePath()
     sketch.fill()
     sketch.stroke()
-```
-
-Now, let's make sure the JS is detecting where the mouse is.
-
-JS
-```coffeescript
-# General Variables
-sketch = Sketch.create()
-particles = []
-particleCount = 750
-sketch.mouse.x = sketch.width / 2
-sketch.mouse.y = sketch.height / 2
-sketch.strokeStyle = 'hsla(200, 50%, 50%, .4)'
-```
-
-.... and a bit further down let's create an effect  for when the particles are close to the mouse.
-
-JS
-```coffeescript
-Particle.prototype =
-  update: ->
-    # Determine Distance From Mouse
-    distx = this.x - sketch.mouse.x
-    disty = this.y - sketch.mouse.y
-    dist = sqrt( distx * distx + disty * disty )
-    
-    # Set Radius
-    if dist < this.threshold
-      radius = this.baseRadius + ( ( this.threshold - dist ) / this.threshold ) * this.maxRadius
-      this.radius = if radius > this.maxRadius then this.maxRadius else radius
-    else
-      this.radius = this.baseRadius
 ```
 
 
