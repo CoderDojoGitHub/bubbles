@@ -69,6 +69,13 @@ Next, we're going to create a bunch of particles on the screen and have them mov
 
 **JS**
 
+This define hat we initially want
+
+- A new sketchboard
+- An ampty list of particles
+- Total 750 particles
+- Bluish Strokestyle (border color)
+
 ```coffeescript
 # General Variables
 sketch = Sketch.create()
@@ -76,6 +83,13 @@ particles = []
 particleCount = 750
 sketch.strokeStyle = 'hsla(200, 50%, 50%, .4)'
 ```
+
+This describes what a particle is:
+
+- x: its horizontal location (randomly assigned)
+- y: its vertical location (randomly assigned)
+- vx: horizontal velocity (0 means still)
+- vy: vertical velocity (randomly chosen in the negative direction between 1 and 10 then divided by 5)
 
 ```coffeescript
 # Particles
@@ -89,6 +103,24 @@ Particle = ->
   this.maxRadius = 50  
   this.threshold = 150 
 ```
+
+These are the behaviour functions for the particle:
+
+**update**
+
+Describes what that bubble is suppose to do
+
+- Increases vx (horizontal speed) randomly
+- Increases vy (vertical speed) randomly
+- Changes x (horizontal location) randomly
+- Changes y (vertical location) randomly
+
+**render**
+
+- Hands over the bubble to sketch.js
+- Sketch.js creates an arc that the particle follos
+- Sketch.js fills in the bubble with color
+- Sketch.js adds a border stroke to the bubble
 
 ```coffeescript
 # Particle Prototype
@@ -109,6 +141,14 @@ Particle.prototype =
     sketch.fill()
     sketch.stroke()
 ```
+
+Now we start populating the bubbles
+
+- Variable particles is currently empty
+- We do a while loop from 750 to 0 and add a new particle to the particles list
+- Then we clear the visible sketchboard (like resetting it)
+- We do another while loop where we go through all the bubbles and `update()` (assign animation functions)
+- Then we do our last while loop and render each particle to come on screen
 
 ```coffeescript
 # Create Particles
@@ -134,6 +174,69 @@ sketch.draw = ->
 A lot just happened here! Try typing in each line by hand and thinking through what it may be doing. We are creating particles, defining their properties, drawing them on the screen, adjusting their speed, and more.
 
 However, you may notice that the particles disappear after a while. After all, we only created 750. Let's find a way to recycle them.
+
+
+### Working prototype - Full Code
+
+
+```coffeescript
+# General Variables
+sketch = Sketch.create()
+particles = []
+particleCount = 750
+sketch.strokeStyle = 'hsla(200, 50%, 50%, .4)'
+
+# Particles
+Particle = ->
+  this.x = random( sketch.width ) 
+  this.y = random( sketch.height, sketch.height * 2 )
+  this.vx = 0
+  this.vy = -random( 1, 10 ) / 5
+  this.radius = 1
+  this.baseRadius = 1
+  this.maxRadius = 50  
+  this.threshold = 150
+
+# Particle Prototype
+Particle.prototype =
+  update: ->
+    # Adjust Velocity
+    this.vx += ( random( 100 ) - 50 ) / 1000
+    this.vy -= random( 1, 20 ) / 10000
+      
+    # Apply Velocity
+    this.x += this.vx
+    this.y += this.vy
+    
+  render: ->
+    sketch.beginPath()
+    sketch.arc( this.x, this.y, this.radius, 0, TWO_PI )
+    sketch.closePath()
+    sketch.fill()
+    sketch.stroke()
+
+# Create Particles
+z = particleCount
+while z--
+  particles.push( new Particle() )
+  
+# Sketch Clear
+sketch.clear = ->
+  sketch.clearRect( 0, 0, sketch.width, sketch.height )
+  
+# Sketch Update
+sketch.update = ->
+  i = particles.length
+  particles[ i ].update() while i--
+
+# Sketch Draw
+sketch.draw = ->  
+  i = particles.length
+  particles[ i ].render() while i--
+```
+
+
+
 
 JS
 ```coffeescript
